@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management - College Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/event-management.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <div class="logo">
+                <h1>College Events</h1>
+            </div>
+            <button id="menuBtn" class="menu-btn">Menu</button>
+            <ul class="nav-links">
+                <button id="closeNav" class="close-btn">&times;</button>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+               
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="event-management.html" class="active">Manage Events</a></li>
+                <li><button id="logoutBtn" class="btn-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="event-management-hero">
+        <div class="container">
+            <h2>Event Management Dashboard</h2>
+            <p>Create, manage, and organize college events with ease. Full control over your event lifecycle.</p>
+        </div>
+    </section>
+
+    <main class="management-container">
+        <!-- User Info Section -->
+        <div class="user-info" id="userInfo">
+            <h4>Welcome back!</h4>
+            <p id="userRole">Loading user information...</p>
+            <p id="userCollege">College: Loading...</p>
+        </div>
+
+        <!-- Message Display -->
+        <div id="message" class="message" style="display: none;"></div>
+
+        <!-- Management Tabs -->
+        <div class="management-tabs">
+            <button class="tab-btn active" onclick="showTab('create')">Create Event</button>
+            <button class="tab-btn" onclick="showTab('manage')">Manage Events</button>
+        </div>
+
+        <!-- Create Event Form -->
+        <div id="createTab" class="tab-content">
+            <div class="event-form-container">
+                <h3>Create New Event</h3>
+                <form id="eventForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title</label>
+                            <input type="text" id="eventTitle" name="title" placeholder="Enter event title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Event Date</label>
+                            <input type="datetime-local" id="eventDate" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventLocation">Location</label>
+                            <input type="text" id="eventLocation" name="location" placeholder="Enter event location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCategory">Category</label>
+                            <select id="eventCategory" name="category" required>
+                                <option value="">Select category</option>
+                                <option value="academic">Academic</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="sports">Sports</option>
+                                <option value="social">Social</option>
+                                <option value="workshop">Workshop</option>
+                                <option value="seminar">Seminar</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventImage">Image URL</label>
+                            <input type="url" id="eventImage" name="image" placeholder="Enter image URL (optional)">
+                        </div>
+                        <div class="form-group">
+                            <label for="maxAttendees">Maximum Attendees</label>
+                            <input type="number" id="maxAttendees" name="maxAttendees" placeholder="Leave empty for unlimited" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTags">Tags (comma-separated)</label>
+                            <input type="text" id="eventTags" name="tags" placeholder="e.g. workshop, tech, networking">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Contact Email</label>
+                            <input type="email" id="contactEmail" name="contactEmail" placeholder="Contact email for inquiries">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" name="description" rows="4" placeholder="Describe your event..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="prerequisites">Prerequisites</label>
+                        <textarea id="prerequisites" name="prerequisites" rows="3" placeholder="Any requirements or prerequisites for participants..."></textarea>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label for="allowParticipation">
+                            <input type="checkbox" id="allowParticipation" name="allowParticipation" checked>
+                            Allow student participation
+                        </label>
+                    </div>
+
+                    <!-- Custom Questions Section -->
+                    <div class="custom-questions-section">
+                        <h4>Custom Registration Questions</h4>
+                        <p class="section-description">Add additional questions for participants to answer during registration.</p>
+                        <div id="customQuestionsContainer">
+                            <!-- Custom questions will be dynamically added here -->
+                        </div>
+                        <button type="button" id="addCustomQuestionBtn" class="btn-secondary" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> Add Custom Question
+                        </button>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Event</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Events Tab -->
+        <div id="manageTab" class="tab-content" style="display: none;">
+            <div class="events-list-container">
+                <h3>Your Events</h3>
+                <div id="eventsList">
+                    <div class="loading">Loading events...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Event Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Edit Event</h3>
+            <form id="editEventForm">
+                <input type="hidden" id="editEventId" name="id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editEventTitle">Event Title</label>
+                        <input type="text" id="editEventTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventDate">Event Date</label>
+                        <input type="datetime-local" id="editEventDate" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventLocation">Location</label>
+                        <input type="text" id="editEventLocation" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventCategory">Category</label>
+                        <select id="editEventCategory" name="category" required>
+                            <option value="academic">Academic</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="sports">Sports</option>
+                            <option value="social">Social</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventImage">Image URL</label>
+                        <input type="url" id="editEventImage" name="image">
+                    </div>
+                    <div class="form-group">
+                        <label for="editMaxAttendees">Maximum Attendees</label>
+                        <input type="number" id="editMaxAttendees" name="maxAttendees" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventTags">Tags (comma-separated)</label>
+                        <input type="text" id="editEventTags" name="tags" placeholder="e.g. workshop, tech, networking">
+                    </div>
+                    <div class="form-group">
+                        <label for="editContactEmail">Contact Email</label>
+                        <input type="email" id="editContactEmail" name="contactEmail" placeholder="Contact email for inquiries">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editEventDescription">Description</label>
+                    <textarea id="editEventDescription" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editPrerequisites">Prerequisites</label>
+                    <textarea id="editPrerequisites" name="prerequisites" rows="3" placeholder="Any requirements or prerequisites for participants..."></textarea>
+                </div>
+                <div class="form-group checkbox-group">
+                    <label for="editAllowParticipation">
+                        <input type="checkbox" id="editAllowParticipation" name="allowParticipation">
+                        Allow student participation
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">Update Event</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>College Events</h3>
+                    <p>Your go-to platform for all college event information and management.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                        <li><a href="event-management.html">Manage Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 College Events. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/custom-questions.js"></script>
+    <script src="js/event-management.js"></script>
+
+    <!-- Participants Modal -->
+    <div id="participantsModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" id="participantsModalClose">&times;</span>
+            <h3>Event Participants</h3>
+            <div id="participantsList">
+                <!-- Participants will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

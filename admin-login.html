@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login - College Events</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/admin-login.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <h1><i class="fas fa-crown"></i> College Events Admin</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="admin-login.html" class="btn-login active">Admin Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="admin-login-hero">
+        <div class="container">
+            <div class="hero-content">
+                <i class="fas fa-shield-alt hero-icon"></i>
+                <h2>Administrator Access</h2>
+                <p>Secure login portal for event administrators. Manage college events, oversee registrations, and maintain the platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="auth-container">
+        <div class="auth-form admin-form">
+            <div class="form-header">
+                <i class="fas fa-user-shield"></i>
+                <h2>Admin Sign In</h2>
+                <p>Enter your administrator credentials</p>
+            </div>
+
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input type="email" id="adminEmail" name="email" placeholder="Enter admin email" required />
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-field">
+                        <input type="password" id="adminPassword" name="password" placeholder="Enter your password" required />
+                        <button type="button" class="password-toggle" onclick="togglePassword('adminPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="admin-submit-btn">
+                    <i class="fas fa-sign-in-alt"></i> Access Admin Panel
+                </button>
+            </form>
+
+            <div class="auth-links">
+                <p><a href="admin-signup.html"><i class="fas fa-user-plus"></i> Need to create an admin account?</a></p>
+                <div class="forgot-password">
+                    <a href="#"><i class="fas fa-key"></i> Forgot password?</a>
+                </div>
+            </div>
+
+            <div class="admin-features">
+                <h3><i class="fas fa-star"></i> Admin Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>Create Events</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <span>Manage Users</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>View Analytics</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-cog"></i>
+                        <span>System Settings</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminMessage"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-crown"></i> College Events Admin</h3>
+                    <p>Administrative portal for managing college event platform.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Main Site</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                        <li><a href="admin-login.html">Admin Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <p>Email: admin@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Emergency: (123) 456-7891</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 College Events Administration. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin-login.js"></script>
+
+    <script>
+        function togglePassword(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const toggleBtn = passwordInput.nextElementSibling;
+            const icon = toggleBtn.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+    </script>
+</body>
+</html>

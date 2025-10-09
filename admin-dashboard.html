@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - College Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <div class="logo">
+                <h1>College Events</h1>
+            </div>
+            <button id="menuBtn" class="menu-btn">Menu</button>
+            <ul class="nav-links">
+                <button id="closeNav" class="close-btn">&times;</button>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
+                <li><button id="logoutBtn" class="btn-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="dashboard-hero">
+        <div class="container">
+            <h2>Admin Dashboard</h2>
+            <p>Manage events, users, and system settings for the college event platform.</p>
+        </div>
+    </section>
+
+    <main class="dashboard-container">
+        <!-- User Info Section -->
+        <div class="user-info" id="userInfo">
+            <h4>Welcome back, Admin!</h4>
+            <p id="userRole">Loading user information...</p>
+            <p id="userCollege">College: Loading...</p>
+        </div>
+
+        <!-- Dashboard Tabs -->
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="showTab('events')">Manage Events</button>
+            <button class="tab-btn" onclick="showTab('users')">Manage Users</button>
+            <button class="tab-btn" onclick="showTab('analytics')">Analytics</button>
+            <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overviewTab" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total Events</h4>
+                    <p id="totalEvents">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Users</h4>
+                    <p id="totalUsers">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Upcoming Events</h4>
+                    <p id="upcomingEvents">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Active Users</h4>
+                    <p id="activeUsers">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Events Tab -->
+        <div id="eventsTab" class="tab-content" style="display: none;">
+            <div class="management-section">
+                <h3>Event Management</h3>
+                <p>Go to the dedicated event management page to create, edit, and delete events.</p>
+                <a href="event-management.html" class="btn-primary">Manage Events</a>
+            </div>
+        </div>
+
+        <!-- Manage Users Tab -->
+        <div id="usersTab" class="tab-content" style="display: none;">
+            <div class="management-section">
+                <h3>User Management</h3>
+                <div id="usersList">
+                    <div class="loading">Loading users...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content" style="display: none;">
+            <div class="analytics-section">
+                <h3>Event Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h4>Popular Categories</h4>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Event Trends</h4>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settingsTab" class="tab-content" style="display: none;">
+            <div class="settings-section">
+                <h3>System Settings</h3>
+                <form id="settingsForm">
+                    <div class="form-group">
+                        <label for="siteTitle">Site Title</label>
+                        <input type="text" id="siteTitle" name="siteTitle" value="College Events" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminEmail">Admin Email</label>
+                        <input type="email" id="adminEmail" name="adminEmail" value="admin@college.edu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxEventsPerUser">Max Events Per User</label>
+                        <input type="number" id="maxEventsPerUser" name="maxEventsPerUser" value="10" min="1" required>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label for="allowUserRegistration">
+                            <input type="checkbox" id="allowUserRegistration" name="allowUserRegistration" checked>
+                            Allow User Registration
+                        </label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label for="emailNotifications">
+                            <input type="checkbox" id="emailNotifications" name="emailNotifications" checked>
+                            Enable Email Notifications
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Settings</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>College Events</h3>
+                    <p>Your go-to platform for all college event information.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                        <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 College Events. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
