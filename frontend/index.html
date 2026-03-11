@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Global Events - Discover Amazing Worldwide Activities</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user-dashboard.css" />
+    <link rel="stylesheet" href="css/register.css" />
+    <link rel="stylesheet" href="css/toast.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">     
+        <nav class="navbar">
+            <div class="logo">
+            
+                <image src="Images/Eventify-3-.png"></image>
+            </div>
+
+            <ul class="nav-links">
+                <li><button id="closeNav" class="close-btn">&times;</button></li>
+                <li><a href="index.html" class="active">Home</a></li> 
+                <li><a href="about.html">About</a></li>
+
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+                <li><a href="user-dashboard.html" id="dashboardLink" style="display:none;">Dashboard</a></li>
+                <li><button id="logoutBtn" class="btn-logout" style="display:none;">Logout</button></li>
+            </ul>
+            <button id="menuBtn" class="menu-btn">Menu</button>
+        </nav>
+        <nav class="categories-of-events">
+            <ul class="categories-list">
+                <li><a href="#events" class="category-link">All Events</a></li>
+                <li><a href="#events" class="category-link">Workshops</a></li>
+                <li><a href="#events" class="category-link">Seminars</a></li>
+                <li><a href="#events" class="category-link">Cultural Festivals</a></li>
+                <li><a href="#events" class="category-link">Sports Events</a></li>
+                <li><a href="#events" class="category-link">Tech Talks</a></li>
+                <li><a href="#events" class="category-link">Wedding</a></li>
+                <li><a href="#events" class="category-link">Corporate</a></li>
+                </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-inner container">
+            <div class="hero-content">
+                <p class="hero-kicker"> Event Management Platform</p>
+                <h2>Discover & Manage Stunning Global Events</h2>
+                <p>From cultural festivals to international seminars, plan, promote, and track every event worldwide from a single beautiful dashboard.</p>
+
+                <div class="hero-actions">
+                    <a href="#events" class="btn-primary">Explore Upcoming Events</a>
+                    <a href="about.html" class="btn-secondary hero-secondary-btn">Learn More</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <h3>15+</h3>
+                        <p>Events hosted</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>20+</h3>
+                        <p>Registrations managed</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>5+</h3>
+                        <p>Departments onboarded</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-frame">
+                    <img src="https://dgu.ac/thumb/1400x560/images/header-images/life-at-dgu/college-fest/4.jpg" alt="College Event" />
+                    <div class="hero-badge hero-badge--top">
+                        <span>Live now</span>
+                        <strong>Tech Fest 2026</strong>
+                    </div>
+                    <div class="hero-badge hero-badge--bottom">
+                        <span>Up next</span>
+                        <strong>Cultural Night • 7:30 PM</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section id="events" class="events-section">
+            <div class="container">
+                <div class="events-header">
+                    <h2 class="section-title">Upcoming Events</h2>
+                    <p class="section-subtitle">Discover amazing global activities and join the fun</p>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input 
+                            type="text" 
+                            id="eventSearchInput" 
+                            class="search-input" 
+                            placeholder="Search events by name, location, or category..."
+                        >
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <div class="search-filters">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="academic">Academic</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="sports">Sports</option>
+                            <option value="social">Social</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="tech">Tech</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="events-container">
+                    <div class="events-grid" id="eventsGrid">
+                        <!-- Events will be loaded dynamically via JavaScript -->
+                    </div>
+                </div>
+                <div class="ended-events">
+                    <h3 class="ended-events-title">Recently Ended Events</h3>
+                    <div class="events-grid" id="endedEventsGrid">
+                        <!-- Ended events will be loaded dynamically via JavaScript -->
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="highlights" class="highlights-section">
+            <div class="container">
+                <div class="events-header">
+                    <h2 class="section-title">Event Highlights</h2>
+                    <p class="section-subtitle">A glimpse of the energy, creativity, and impact from recent campus events</p>
+                </div>
+
+                <div class="highlights-grid">
+                    <article class="highlight-card">
+                        <div class="highlight-tag">Cultural</div>
+                        <h3>Annual Cultural Night</h3>
+                        <p>Music, dance, and performances from over 15 student clubs celebrating diversity on campus.</p>
+                        <ul class="highlight-meta">
+                            <li>2.3k+ attendees</li>
+                            <li>10+ hours of performances</li>
+                            <li>Live streaming enabled</li>
+                        </ul>
+                    </article>
+
+                    <article class="highlight-card">
+                        <div class="highlight-tag highlight-tag--tech">Tech</div>
+                        <h3>Global Hackathon Weekend</h3>
+                        <p>A 48‑hour innovation sprint bringing together developers, designers, and entrepreneurs.</p>
+                        <ul class="highlight-meta">
+                            <li>60+ teams</li>
+                            <li>12 sponsor partners</li>
+                            <li>₹1L prize pool</li>
+                        </ul>
+                    </article>
+
+                    <article class="highlight-card">
+                        <div class="highlight-tag highlight-tag--sports">Sports</div>
+                        <h3>Inter‑College Sports Meet</h3>
+                        <p>High‑energy tournaments across multiple disciplines with real‑time score tracking.</p>
+                        <ul class="highlight-meta">
+                            <li>18 participating colleges</li>
+                            <li>25+ matches</li>
+                            <li>Centralized scheduling</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">We provide comprehensive event management solutions</p>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">📅</div>
+                        <h3>Event Planning</h3>
+                        <p>We help organize and plan global events from start to finish, ensuring every detail is perfect.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📢</div>
+                        <h3>Event Promotion</h3>
+                        <p>Promote your events effectively to reach a wider audience through various channels.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎫</div>
+                        <h3>Ticketing System</h3>
+                        <p>Manage event registrations and ticket sales seamlessly with our integrated system.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Join the Fun?</h2>
+                <p>Create an account to get personalized event recommendations and manage your event attendance.</p>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn-primary">Get Started</a>
+                    <a href="contacts.html" class="btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Events</h3>
+                    <p>Your go-to platform for all college event information and management.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Global Events. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/index-events.js"></script>
+
+    <!-- global loading overlay -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Loading...</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<!--
+    This file is the unified user dashboard page.
+    It replaces the older after-login-user.html variant which has been removed.
+    All additional tabs and features live here.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Global Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/user-dashboard.css">
+    <link rel="stylesheet" href="css/toast.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <div class="logo">
+                <h1>Events</h1>
+            </div>
+            <button id="menuBtn" class="menu-btn">Menu</button>
+            <ul class="nav-links">
+                <button id="closeNav" class="close-btn">&times;</button>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="user-dashboard.html" class="active">Dashboard</a></li>
+                <li><button id="logoutBtn" class="btn-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="dashboard-hero">
+        <div class="container">
+            <h2>User Dashboard</h2>
+            <p>Discover and register for exciting global events. Stay updated with your registered events.</p>
+        </div>
+    </section>
+
+    <main class="dashboard-container compact-list">
+        <!-- User Info Section -->
+        <div class="user-info" id="userInfo">
+            <h4>Welcome back!</h4>
+            <p id="userRole">Loading user information...</p>
+            <p id="userCollege">Organization: Loading...</p>
+        </div>
+
+        <!-- Dashboard Summary Cards -->
+        <div id="dashboardSummary" class="dashboard-summary">
+            <div class="summary-card">
+                <h4>Upcoming</h4>
+                <div class="summary-value" id="upcomingCount">—</div>
+            </div>
+            <div class="summary-card">
+                <h4>Registered</h4>
+                <div class="summary-value" id="registeredCount">—</div>
+            </div>
+            <div class="summary-card">
+                <h4>Tickets</h4>
+                <div class="summary-value" id="ticketsCount">—</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Tabs -->
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" onclick="window.showTab('upcoming', event)">Upcoming Events</button>
+            <button class="tab-btn" onclick="window.showTab('registered', event)">My Events</button>
+            <button class="tab-btn" onclick="window.showTab('tickets', event)"><i class="fas fa-ticket-alt"></i> My Tickets</button>
+            <button class="tab-btn" onclick="window.showTab('history', event)">Event History</button>
+            <button class="tab-btn" onclick="window.showTab('favorites', event)">Favorites</button>
+            <button class="tab-btn" onclick="window.showTab('notifications', event)">Notifications</button>
+            <button class="tab-btn" onclick="window.showTab('profile', event)">Profile</button>
+        </div>
+
+        <!-- Upcoming Events Tab -->
+        <div id="upcomingTab" class="tab-content">
+            <div class="events-filter-section">
+                <div class="filter-controls">
+                    <input type="text" id="searchInput" placeholder="Search events..." class="search-input">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="academic">Academic</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="sports">Sports</option>
+                        <option value="social">Social</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="tech">Tech</option>
+                        <option value="corporate">Corporate</option>
+                        <option value="wedding">Wedding</option>
+                        <option value="virtual">Virtual</option>
+                        <option value="exhibition">Exhibition</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div id="upcomingEvents" class="events-list">
+                <div class="loading">Loading upcoming events...</div>
+            </div>
+        </div>
+
+        <!-- My Events Tab -->
+        <div id="registeredTab" class="tab-content" style="display: none;">
+            <div class="events-section">
+                <h3>My Registered Events</h3>
+                <div id="registeredEvents" class="events-list">
+                    <div class="loading">Loading your events...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Tickets Tab -->
+        <div id="ticketsTab" class="tab-content" style="display: none;">
+            <div id="myTicketsContainer">
+                <div class="loading">Loading your tickets...</div>
+            </div>
+        </div>
+
+        <!-- Event History Tab -->
+        <div id="historyTab" class="tab-content" style="display: none;">
+            <div class="events-section">
+                <h3>Event History</h3>
+                <div id="historyEvents" class="events-list">
+                    <div class="loading">Loading event history...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div id="favoritesTab" class="tab-content" style="display: none;">
+            <div class="events-section">
+                <h3>My Favorite Events</h3>
+                <div id="favoriteEvents" class="events-list">
+                    <div class="loading">Loading favorite events...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Tab -->
+        <div id="notificationsTab" class="tab-content" style="display: none;">
+            <div class="notifications-section">
+                <h3>Notifications</h3>
+                <ul id="notificationsList" class="notifications-list">
+                    <li>Loading notifications...</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profileTab" class="tab-content" style="display: none;">
+            <div class="profile-section">
+                <h3>My Profile</h3>
+                <div class="profile-info" id="profileInfo">
+                    <div class="loading">Loading profile...</div>
+                </div>
+                <button id="editProfileBtn" class="btn-secondary">Edit Profile</button>
+                <div id="editProfileForm" style="display:none; margin-top: 20px;">
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="editUsername">Username</label>
+                            <input type="text" id="editUsername" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editCollegeName">College Name</label>
+                            <input type="text" id="editCollegeName" name="collegeName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDepartment">Department</label>
+                            <input type="text" id="editDepartment" name="department" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editMobileNo">Mobile Number</label>
+                            <input type="text" id="editMobileNo" name="mobileNo">
+                        </div>
+                        <button type="submit" class="submit-btn">Save Changes</button>
+                        <button type="button" id="cancelEditProfile" class="btn-outline">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Email Verification Section -->
+            <div class="profile-section" style="margin-top: 30px; border: 2px solid #3498db; background: #ecf0f1; padding: 20px; border-radius: 8px;">
+                <h3><i class="fas fa-envelope"></i> Email Verification</h3>
+                <div id="emailVerificationStatus" style="margin-bottom: 15px;">
+                    <p id="emailStatus">Checking email verification status...</p>
+                </div>
+                <div id="emailVerificationForm" style="display: none;">
+                    <p style="margin-bottom: 15px; color: #555;">Verify your email address to ensure you receive all event notifications and updates.</p>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
+                        <button type="button" id="sendEmailOtpBtn" class="btn-secondary">
+                            <i class="fas fa-envelope"></i> Send Verification Code
+                        </button>
+                        <span id="emailOtpMessage" style="color: #27ae60;"></span>
+                    </div>
+                    <div id="otpInputSection" style="display: none;">
+                        <div class="form-group">
+                            <label for="emailOtpCode">Enter 6-digit code:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="emailOtpCode" maxlength="6" placeholder="000000" style="max-width: 150px;">
+                                <button type="button" id="verifyEmailOtpBtn" class="submit-btn">Verify</button>
+                            </div>
+                            <div id="emailOtpError" style="color: #e74c3c; font-size: 0.9em; margin-top: 5px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="emailVerifiedMessage" style="display: none; background: #d4edda; color: #155724; padding: 15px; border-radius: 4px;">
+                    <i class="fas fa-check-circle"></i> Your email is verified!
+                </div>
+            </div>
+            
+            <!-- Debug Panel -->
+            <div class="profile-section" style="margin-top: 30px; background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                <h3>🔧 Debug Information</h3>
+                <button class="btn-secondary" onclick="window.runDiagnostics()">Run Diagnostics</button>
+                <div id="debugOutput" style="margin-top: 15px; font-family: monospace; font-size: 12px; white-space: pre-wrap; background: white; padding: 10px; border-radius: 4px; display: none;">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Event Details Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="eventDetails">
+                <div class="loading">Loading event details...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content event-registration-form">
+            <span class="close" onclick="closeRegistrationModal()">&times;</span>
+            <h3>Register for Event</h3>
+            <div id="registrationContent">
+                <div class="loading">Loading registration form...</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Global Events</h3>
+                    <p>Your go-to platform for all global event information.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                        <li><a href="user-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Global Events. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Stub function to prevent "window.showTab is not a function" errors during loading -->
+    <script>
+        window.showTab = function() {
+            console.warn('showTab called before full script loaded');
+        };
+    </script>
+
+    <script src="js/toast.js"></script>
+    <script src="js/utils.js?v=1"></script>
+    <script src="js/navigation.js?v=1"></script>
+    <script src="js/events.js?v=1"></script>
+    <script src="js/epass-dashboard.js?v=1"></script>
+    <script src="js/user-dashboard.js?v=1"></script>
+
+    <!-- global loading overlay -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Loading...</div>
+    </div>
+</body>
+</html>

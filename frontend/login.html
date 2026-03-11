@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Global Events</title>
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/toast.css" />
+    
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <div class="logo">
+                <h1>Events</h1>
+            </div>
+            <button id="menuBtn" class="menu-btn">Menu</button>
+            <ul class="nav-links">
+                <button id="closeNav" class="close-btn">&times;</button>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="admin-login.html">Admin</a></li>
+                <li><a href="login.html" class="btn-login active">Login</a></li>
+                <li><button id="logoutBtn" class="btn-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content container">
+        <section class="auth-section">
+            <form id="loginForm" class="auth-form">
+                <h2>Login</h2>
+                <div id="message"></div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <p>Don't have an account? <a href="user-signup.html">Sign up</a></p>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>Email: info@collegeevents.com</p>
+                <p>Phone: +1 234 567 890</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Facebook | Twitter | Instagram</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Global Events. All rights reserved.
+        </div>
+    </footer>
+    <!-- global loading overlay -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Loading...</div>
+    </div>
+
+    <script defer src="js/toast.js"></script>
+    <script defer src="js/utils.js"></script>
+    <script defer src="js/navigation.js"></script>
+    <script defer src="js/auth.js"></script>
+</body>
+</html>

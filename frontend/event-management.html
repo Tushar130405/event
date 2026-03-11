@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management - Professional Event Organizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/event-management.css">
+    <link rel="stylesheet" href="css/scanner.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <div class="logo">
+                <h1><i class="fas fa-calendar-star"></i> Events</h1>
+            </div>
+            <button id="menuBtn" class="menu-btn">Menu</button>
+            <ul class="nav-links">
+                <button id="closeNav" class="close-btn">&times;</button>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="event-management.html" class="active">Manage Events</a></li>
+                <li><button id="logoutBtn" class="btn-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="event-management-hero">
+        <div class="container">
+            <div class="hero-content-wrapper">
+                <i class="fas fa-magic hero-icon"></i>
+                <h2>Professional Event Management</h2>
+                <p>Create stunning events with comprehensive planning tools. Manage every detail from categories to schedules.</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <strong id="totalEventsCount">0</strong>
+                        <span>Total Events</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong id="upcomingEventsCount">0</strong>
+                        <span>Upcoming</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong id="endedEventsCount">0</strong>
+                        <span>Ended</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong id="totalParticipantsCount">0</strong>
+                        <span>Participants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="management-container">
+        <!-- User Info Section -->
+        <div class="user-info" id="userInfo">
+            <div class="user-info-content">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <h4 id="userName">Welcome back!</h4>
+                    <p id="userRole">Loading user information...</p>
+                    <p id="userCollege">Organization: Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Display -->
+        <div id="message" class="message" style="display: none;"></div>
+
+        <!-- Management Tabs -->
+        <div class="management-tabs">
+            <button class="tab-btn active" onclick="showTab('create')">
+                <i class="fas fa-plus-circle"></i> Create Event
+            </button>
+            <button class="tab-btn" onclick="showTab('manage')">
+                <i class="fas fa-list"></i> Manage Events
+            </button>
+            <button class="tab-btn" onclick="showTab('scanner')">
+                <i class="fas fa-qrcode"></i> E-Pass Scanner
+            </button>
+            <button class="tab-btn" onclick="showTab('analytics')">
+                <i class="fas fa-chart-line"></i> Analytics
+            </button>
+        </div>
+
+        <!-- Create Event Form -->
+        <div id="createTab" class="tab-content">
+            <div class="event-form-container">
+                <div id="formSteps" class="form-steps">Step 1 of 2: Event Details</div>
+                <div class="form-header">
+                    <h3><i class="fas fa-calendar-plus"></i> Create New Event</h3>
+                    <p class="form-subtitle">Fill in all details to create a professional event</p>
+                </div>
+                
+                <form id="eventForm" class="enhanced-form">
+                    <!-- STEP 1: Event Details -->
+                    <div id="step1">
+                        <!-- Basic Information Section -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-info-circle"></i> Basic Information</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="eventTitle">
+                                        <i class="fas fa-heading"></i> Event Title <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="eventTitle" name="title" placeholder="e.g., Annual Tech Fest 2024" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventDate">
+                                        <i class="fas fa-calendar-alt"></i> Event Date & Time <span class="required">*</span>
+                                    </label>
+                                    <input type="datetime-local" id="eventDate" name="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventEndDate">
+                                        <i class="fas fa-calendar-times"></i> End Date & Time
+                                    </label>
+                                    <input type="datetime-local" id="eventEndDate" name="endDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventLocation">
+                                        <i class="fas fa-map-marker-alt"></i> Location <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="eventLocation" name="location" placeholder="e.g., Main Auditorium, Building A" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category Selection Section -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-tags"></i> Event Category</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="mainCategory">
+                                        <i class="fas fa-layer-group"></i> Main Category
+                                    </label>
+                                    <select id="mainCategory" name="mainCategory" onchange="updateSubEvents()">
+                                        <option value="">Select Main Category (Optional)</option>
+                                        <option value="corporate">Corporate Events</option>
+                                        <option value="wedding">Wedding Events</option>
+                                        <option value="college">College & Educational Events</option>
+                                        <option value="cultural">Cultural & Entertainment Events</option>
+                                        <option value="social">Social & Community Events</option>
+                                        <option value="sports">Sports Events</option>
+                                        <option value="virtual">Virtual & Online Events</option>
+                                        <option value="exhibition">Exhibition & Promotion Events</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subEvent">
+                                        <i class="fas fa-list-ul"></i> Sub-Event Type
+                                    </label>
+                                    <select id="subEvent" name="subEvent">
+                                        <option value="">Select Sub-Event (Choose main category first)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventCategory">
+                                        <i class="fas fa-tag"></i> Quick Category Tag <span class="required">*</span>
+                                    </label>
+                                    <select id="eventCategory" name="category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="academic">Academic</option>
+                                        <option value="cultural">Cultural</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="social">Social</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="seminar">Seminar</option>
+                                    <option value="tech">Tech</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Details Section -->
+                    <div class="form-section">
+                        <h4 class="section-title"><i class="fas fa-align-left"></i> Event Details</h4>
+                        <div class="form-group">
+                            <label for="eventDescription">
+                                <i class="fas fa-file-alt"></i> Description <span class="required">*</span>
+                            </label>
+                            <textarea id="eventDescription" name="description" rows="5" placeholder="Provide a detailed description of your event..." required></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="eventImage">
+                                    <i class="fas fa-image"></i> Event Image URL
+                                </label>
+                                <input type="url" id="eventImage" name="image" placeholder="https://example.com/image.jpg">
+                                <small class="form-hint">Enter a URL for the event banner image</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventTags">
+                                    <i class="fas fa-hashtag"></i> Tags (comma-separated)
+                                </label>
+                                <input type="text" id="eventTags" name="tags" placeholder="e.g. workshop, tech, networking, innovation">
+                                <small class="form-hint">Separate tags with commas</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Schedule Section -->
+                    <div class="form-section">
+                        <h4 class="section-title"><i class="fas fa-clock"></i> Event Schedule</h4>
+                        <div id="scheduleContainer">
+                            <div class="schedule-item">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Schedule Item</label>
+                                        <input type="text" name="schedule[0][title]" placeholder="e.g., Opening Ceremony">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Time</label>
+                                        <input type="time" name="schedule[0][time]">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" name="schedule[0][description]" placeholder="Brief description">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-item" onclick="addScheduleItem()">
+                            <i class="fas fa-plus"></i> Add Schedule Item
+                        </button>
+                    </div>
+
+                    <!-- Capacity & Registration Section -->
+                    <div class="form-section">
+                        <h4 class="section-title"><i class="fas fa-users"></i> Capacity & Registration</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="maxAttendees">
+                                    <i class="fas fa-user-friends"></i> Maximum Attendees
+                                </label>
+                                <input type="number" id="maxAttendees" name="maxAttendees" placeholder="Leave empty for unlimited" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="registrationDeadline">
+                                    <i class="fas fa-hourglass-half"></i> Registration Deadline
+                                </label>
+                                <input type="datetime-local" id="registrationDeadline" name="registrationDeadline">
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label for="allowParticipation">
+                                    <input type="checkbox" id="allowParticipation" name="allowParticipation" checked>
+                                    <span>Allow student participation</span>
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label for="requireApproval">
+                                    <input type="checkbox" id="requireApproval" name="requireApproval">
+                                    <span>Require approval for registration</span>
+                                </label>
+                            </div>                            <div class="form-group checkbox-group">
+                                <label for="enableEPass">
+                                    <input type="checkbox" id="enableEPass" name="enableEPass">
+                                    <span>🎫 Enable E-Pass System (Send digital entry passes to registrants)</span>
+                                </label>
+                            </div>                        </div>
+                    </div>
+
+                    <!-- Pricing Section -->
+                    <div class="form-section">
+                        <h4 class="section-title"><i class="fas fa-dollar-sign"></i> Pricing & Packages</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="eventPrice">
+                                    <i class="fas fa-money-bill-wave"></i> Ticket Price (₹)
+                                </label>
+                                <input type="number" id="eventPrice" name="price" placeholder="0 for free event" min="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="earlyBirdPrice">
+                                    <i class="fas fa-tag"></i> Early Bird Price (₹)
+                                </label>
+                                <input type="number" id="earlyBirdPrice" name="earlyBirdPrice" placeholder="Optional discount" min="0" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact & Additional Info (still part of step1) -->
+                    <div class="form-section">
+                        <h4 class="section-title"><i class="fas fa-address-card"></i> Contact & Additional Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contactEmail">
+                                    <i class="fas fa-envelope"></i> Contact Email
+                                </label>
+                                <input type="email" id="contactEmail" name="contactEmail" placeholder="events@college.edu">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">
+                                    <i class="fas fa-phone"></i> Contact Phone
+                                </label>
+                                <input type="tel" id="contactPhone" name="contactPhone" placeholder="+91 1234567890">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventWebsite">
+                                    <i class="fas fa-globe"></i> Event Website
+                                </label>
+                                <input type="url" id="eventWebsite" name="website" placeholder="https://event-website.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prerequisites">
+                                <i class="fas fa-clipboard-check"></i> Prerequisites/Requirements
+                            </label>
+                            <textarea id="prerequisites" name="prerequisites" rows="3" placeholder="Any requirements or prerequisites for participants..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- step1 actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset Form
+                        </button>
+                        <button type="button" id="nextToRegistration" class="submit-btn">
+                            <i class="fas fa-arrow-right"></i> Next: Registration Form
+                        </button>
+                    </div>
+                    </div> <!-- end step1 -->
+
+                    <!-- STEP 2: Registration questions -->
+                    <div id="step2" style="display:none;">
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-question-circle"></i> Custom Registration Questions</h4>
+                            <p class="section-description">Add additional questions for participants to answer during registration. Drag to reorder.</p>
+                            <div id="customQuestionsContainer" class="sortable-container">
+                                <!-- Custom questions will be dynamically added here -->
+                            </div>
+                            <button type="button" id="addCustomQuestionBtn" class="btn-add-item">
+                                <i class="fas fa-plus"></i> Add Custom Question
+                            </button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="backToEvent" class="btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-check-circle"></i> Save Registration Form
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Events Tab -->
+        <div id="manageTab" class="tab-content" style="display: none;">
+            <div class="events-list-container">
+                <div class="list-header">
+                    <h3><i class="fas fa-list-ul"></i> Your Events</h3>
+                    <div class="list-filters">
+                        <select id="filterCategory" onchange="filterEvents()">
+                            <option value="">All Categories</option>
+                            <option value="corporate">Corporate</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="college">College</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="social">Social</option>
+                            <option value="sports">Sports</option>
+                            <option value="virtual">Virtual</option>
+                            <option value="exhibition">Exhibition</option>
+                        </select>
+                        <select id="filterStatus" onchange="filterEvents()">
+                            <option value="">All Status</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="past">Past</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="eventsList">
+                    <div class="loading">Loading events...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- E-Pass Scanner Tab -->
+        <div id="scannerTab" class="tab-content" style="display: none;">
+            <div class="scanner-container">
+                <div class="scanner-header">
+                    <h3><i class="fas fa-qrcode"></i> E-Pass Scanner</h3>
+                    <p class="scanner-subtitle">Scan QR codes on E-passes to verify participant attendance</p>
+                </div>
+
+                <!-- Event Selection -->
+                <div class="scanner-event-select">
+                    <label for="scannerEventSelect"><i class="fas fa-calendar"></i> Select Event:</label>
+                    <select id="scannerEventSelect" onchange="onEventScannerChange()">
+                        <option value="">-- Select an event --</option>
+                    </select>
+                </div>
+
+                <!-- Scanner Interface -->
+                <div class="scanner-interface" style="display: none;" id="scannerInterface">
+                    <div class="scanner-content">
+                        <!-- Camera Feed -->
+                        <div class="scanner-video-container">
+                            <div id="reader" class="scanner-video"></div>
+                            <div class="scanner-overlay">
+                                <div class="scanner-frame"></div>
+                            </div>
+                        </div>
+
+                        <!-- Scanner Controls -->
+                        <div class="scanner-controls">
+                            <button type="button" id="startScannerBtn" class="btn-scanner-primary" onclick="startScanner()">
+                                <i class="fas fa-video"></i> Start Scanner
+                            </button>
+                            <button type="button" id="stopScannerBtn" class="btn-scanner-secondary" onclick="stopScanner()" style="display: none;">
+                                <i class="fas fa-stop-circle"></i> Stop Scanner
+                            </button>
+                            <button type="button" id="manualInputBtn" class="btn-scanner-secondary" onclick="toggleManualInput()">
+                                <i class="fas fa-keyboard"></i> Manual Input
+                            </button>
+                        </div>
+
+                        <!-- Manual Input -->
+                        <div class="manual-input-section" style="display: none;" id="manualInputSection">
+                            <div class="form-group">
+                                <label for="manualEPassToken"><i class="fas fa-token"></i> E-Pass Token:</label>
+                                <input type="text" id="manualEPassToken" placeholder="Paste or type E-pass token here..." class="manual-input">
+                                <button type="button" onclick="verifyManualInput()" class="btn-scanner-primary">
+                                    <i class="fas fa-check"></i> Verify
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scanner Results -->
+                    <div class="scanner-results">
+                        <div class="results-header">
+                            <h4><i class="fas fa-list-check"></i> Scanned E-Passes</h4>
+                            <span id="scannedCount" class="scanned-count">0 scanned</span>
+                        </div>
+                        <div id="scannerResultsList" class="results-list">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Scanned E-passes will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Event Selected Message -->
+                <div class="no-event-message" id="noEventMessage" style="display: block;">
+                    <div class="message-box">
+                        <i class="fas fa-info-circle"></i>
+                        <h3>No Event Selected</h3>
+                        <p>Please select an event from the dropdown above to start scanning E-passes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content" style="display: none;">
+            <div class="analytics-container">
+                <h3><i class="fas fa-chart-bar"></i> Event Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h4>Total Events Created</h4>
+                        <p class="analytics-number" id="analyticsTotalEvents">0</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Total Participants</h4>
+                        <p class="analytics-number" id="analyticsTotalParticipants">0</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Upcoming Events</h4>
+                        <p class="analytics-number" id="analyticsUpcoming">0</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Ended Events</h4>
+                        <p class="analytics-number" id="analyticsEnded">0</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Average Participants/Event</h4>
+                        <p class="analytics-number" id="analyticsAverage">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Event Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3><i class="fas fa-edit"></i> Edit Event</h3>
+            <form id="editEventForm">
+                <input type="hidden" id="editEventId" name="id">
+                <!-- Edit form fields will be populated dynamically -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editEventTitle">Event Title</label>
+                        <input type="text" id="editEventTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventDate">Event Date</label>
+                        <input type="datetime-local" id="editEventDate" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventLocation">Location</label>
+                        <input type="text" id="editEventLocation" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventCategory">Category</label>
+                        <select id="editEventCategory" name="category" required>
+                            <option value="academic">Academic</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="sports">Sports</option>
+                            <option value="social">Social</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventImage">Image URL</label>
+                        <input type="url" id="editEventImage" name="image">
+                    </div>
+                    <div class="form-group">
+                        <label for="editMaxAttendees">Maximum Attendees</label>
+                        <input type="number" id="editMaxAttendees" name="maxAttendees" min="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editEventDescription">Description</label>
+                    <textarea id="editEventDescription" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editPrerequisites">Prerequisites</label>
+                    <textarea id="editPrerequisites" name="prerequisites" rows="3"></textarea>
+                </div>
+                <!-- additional fields that exist in the create form but were missing here -->
+                <div class="form-group">
+                    <label for="editEventTags">Tags (comma-separated)</label>
+                    <input type="text" id="editEventTags" name="tags" placeholder="e.g. workshop, tech, networking">
+                </div>
+                <div class="form-group">
+                    <label for="editContactEmail">Contact Email</label>
+                    <input type="email" id="editContactEmail" name="contactEmail" placeholder="events@college.edu">
+                </div>
+                <div class="form-group checkbox-group">
+                    <label for="editEnableEPass">
+                        <input type="checkbox" id="editEnableEPass" name="enableEPass">
+                        🎫 Enable E-Pass System
+                    </label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <label for="editAllowParticipation">
+                        <input type="checkbox" id="editAllowParticipation" name="allowParticipation">
+                        Allow student participation
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Update Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Participants Modal -->
+    <div id="participantsModal" class="modal" style="display:none;">
+        <div class="modal-content participants-modal-content">
+            <span class="close" id="participantsModalClose">&times;</span>
+            <div id="participantsList">
+                <!-- Participants will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- E-Passes Modal -->
+    <div id="passesModal" class="modal" style="display:none;">
+        <div class="modal-content passes-modal-content">
+            <span class="close" id="passesModalClose">&times;</span>
+            <div id="passesList">
+                <!-- E-pass details will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-calendar-star"></i> EventSphere</h3>
+                    <p>Professional event management platform for colleges and organizations.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                        <li><a href="event-management.html">Manage Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventSphere. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- drag-and-drop library for question reordering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <!-- QR Code Scanner Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/custom-questions.js"></script>
+    <script src="js/epass-scanner.js"></script>
+    <script src="js/event-management.js"></script>
+
+    <!-- global loading overlay -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Loading...</div>
+    </div>
+</body>
+</html>

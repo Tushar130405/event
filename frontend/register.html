@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Global Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Global Events</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="register-hero">
+        <div class="container">
+            <h2>Join Global Events</h2>
+            <p>Create your account to access personalized event recommendations, manage your registrations, and connect with the college community.</p>
+        </div>
+    </section>
+
+    <div class="auth-container">
+        <div class="auth-form" id="studentFormContainer">
+            <h2>Student Sign Up</h2>
+            <form id="studentForm">
+                <div class="form-group">
+                    <label for="studentUsername">Username</label>
+                    <input type="text" id="studentUsername" name="username" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentEmail">Email Address</label>
+                    <input type="email" id="studentEmail" name="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentCollegeName">College Name</label>
+                    <input type="text" id="studentCollegeName" name="collegeName" placeholder="Enter your college name" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentDepartment">Department</label>
+                    <input type="text" id="studentDepartment" name="department" placeholder="Enter your department" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentMobileNo">Mobile Number (Optional)</label>
+                    <input type="tel" id="studentMobileNo" name="mobileNo" placeholder="Enter your mobile number">
+                </div>
+                <div class="form-group">
+                    <label for="studentPassword">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="studentPassword" name="password" placeholder="Create a strong password" required>
+
+                </div>
+                <div class="form-group">
+                    <label for="studentConfirmPassword">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="studentConfirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+
+                    </div>
+                </div>
+                <button type="submit">Create Student Account</button>
+            </form>
+
+            <div class="auth-links">
+                <p>Already have an account? <a href="login.html">Sign in instead</a></p>
+                <p>Are you an administrator? <a href="admin-login.html">Admin Login</a></p>
+            </div>
+
+            <div id="studentMessage"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Global Events</h3>
+                    <p>Your go-to platform for all college event information and management.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Global Events. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        function togglePassword(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const toggleBtn = passwordInput.nextElementSibling;
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = 'Show';
+            }
+        }
+    </script>
+
+    <!-- global loading overlay -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Loading...</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sign Up - Global Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin-signup.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Events</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+                <li><a href="admin-login.html" class="admin-link">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="admin-signup-hero">
+        <div class="container">
+            <h2>Admin Registration</h2>
+            <p>Join our administrative team to manage global events and oversee platform operations.</p>
+        </div>
+    </section>
+
+    <div class="auth-container">
+        <div class="auth-form">
+            <div class="admin-badge">
+                <i class="fas fa-crown"></i>
+                <span>Administrator Access</span>
+            </div>
+            <h2>Admin Sign Up</h2>
+            <p class="admin-description">Create an administrative account to manage events, users, and platform settings.</p>
+
+            <form id="adminSignupForm">
+                <!-- Step 1: Email Verification -->
+                <div id="emailVerificationStep" class="form-step active">
+                    <h3>Step 1: Verify Your Email</h3>
+                    <div class="form-group">
+                        <label for="adminEmail">Email Address</label>
+                        <input type="email" id="adminEmail" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <button type="button" id="sendOtpBtn" class="admin-submit-btn">
+                        <i class="fas fa-envelope"></i> Send OTP
+                    </button>
+                    <div id="emailVerificationMessage"></div>
+                </div>
+
+                <!-- Step 2: OTP Verification -->
+                <div id="otpVerificationStep" class="form-step hidden">
+                    <h3>Step 2: Enter Verification Code</h3>
+                    <p class="step-description">We've sent a 6-digit code to your email. Please enter it below.</p>
+                    <div class="form-group">
+                        <label for="otpCode">Verification Code</label>
+                        <input type="text" id="otpCode" name="otp" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}">
+                    </div>
+                    <button type="button" id="verifyOtpBtn" class="admin-submit-btn">
+                        <i class="fas fa-check"></i> Verify OTP
+                    </button>
+                    <button type="button" id="resendOtpBtn" class="btn-secondary">
+                        <i class="fas fa-redo"></i> Resend OTP
+                    </button>
+                    <div id="otpVerificationMessage"></div>
+                </div>
+
+                <!-- Step 3: Registration Details -->
+                <div id="registrationDetailsStep" class="form-step hidden">
+                    <h3>Step 3: Complete Registration</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adminUsername">Username</label>
+                            <input type="text" id="adminUsername" name="username" placeholder="Choose a username" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organizationType">Organization Type <span class="required">*</span></label>
+                        <select id="organizationType" name="organizationType" required>
+                            <option value="">Select organization type</option>
+                            <option value="college">College</option>
+                            <option value="organization">Organization</option>
+                            <option value="trust">Trust</option>
+                            <option value="company">Company</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminRole">Role</label>
+                        <select id="adminRole" name="role" required>
+                            <option value="">Select your role</option>
+                            <option value="admin">Admin</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="staff">Staff</option>
+                            <option value="volunteer">Volunteer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminMobileNo">Mobile Number (Optional)</label>
+                        <input type="tel" id="adminMobileNo" name="mobileNo" placeholder="Enter your mobile number">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adminPassword">Password</label>
+                            <div class="password-field">
+                                <input type="password" id="adminPassword" name="password" placeholder="Create a strong password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('adminPassword')">Show</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminConfirmPassword">Confirm Password</label>
+                            <div class="password-field">
+                                <input type="password" id="adminConfirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('adminConfirmPassword')">Show</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-requirements">
+                        <h4>Administrator Requirements:</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Email verification required</li>
+                            <li><i class="fas fa-check-circle"></i> Valid organization details required</li>
+                            <li><i class="fas fa-check-circle"></i> Account will be verified before activation</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit" class="admin-submit-btn">
+                        <i class="fas fa-user-shield"></i> Create Admin Account
+                    </button>
+                    <div id="registrationMessage"></div>
+                </div>
+            </form>
+
+            <div class="auth-links">
+                <p>Already have an admin account? <a href="admin-login.html">Admin Login</a></p>
+                <p>Are you a student? <a href="register.html">Student Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Global Events</h3>
+                    <p>Your go-to platform for all college event information and management.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: events@college.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 College Street, City, State 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Global Events. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        const API_BASE_URL = 'http://localhost:3000/api/auth';
+        let verifiedEmail = null;
+
+        function togglePassword(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const toggleBtn = passwordInput.nextElementSibling;
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = 'Show';
+            }
+        }
+
+        function showStep(stepId) {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.add('hidden');
+            });
+            document.getElementById(stepId).classList.remove('hidden');
+        }
+
+        function showMessage(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.color = isError ? '#e74c3c' : '#27ae60';
+            element.style.display = 'block';
+        }
+
+        // Send OTP button click handler
+        document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+            const email = document.getElementById('adminEmail').value.trim();
+
+            if (!email) {
+                showMessage('emailVerificationMessage', 'Please enter your email address', true);
+                return;
+            }
+
+            if (!email.includes('@')) {
+                showMessage('emailVerificationMessage', 'Please enter a valid email address', true);
+                return;
+            }
+
+            try {
+                showLoader('Sending OTP...');
+                const response = await fetch(`${API_BASE_URL}/send-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+
+                const data = await response.json();
+                hideLoader();
+
+                if (response.ok) {
+                    showMessage('emailVerificationMessage', 'OTP sent successfully! Check your email.', false);
+                    setTimeout(() => {
+                        showStep('otpVerificationStep');
+                    }, 1500);
+                } else {
+                    showMessage('emailVerificationMessage', data.message, true);
+                }
+            } catch (error) {
+                hideLoader();
+                showMessage('emailVerificationMessage', 'An error occurred. Please try again.', true);
+            }
+        });
+
+        // Verify OTP button click handler
+        document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+            const email = document.getElementById('adminEmail').value.trim();
+            const otp = document.getElementById('otpCode').value.trim();
+
+            if (!otp || otp.length !== 6) {
+                showMessage('otpVerificationMessage', 'Please enter a valid 6-digit OTP', true);
+                return;
+            }
+
+            try {
+                showLoader('Verifying OTP...');
+                const response = await fetch(`${API_BASE_URL}/verify-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, otp }),
+                });
+
+                const data = await response.json();
+                hideLoader();
+
+                if (response.ok) {
+                    verifiedEmail = email;
+                    showMessage('otpVerificationMessage', 'Email verified successfully!', false);
+                    setTimeout(() => {
+                        showStep('registrationDetailsStep');
+                    }, 1500);
+                } else {
+                    showMessage('otpVerificationMessage', data.message, true);
+                }
+            } catch (error) {
+                hideLoader();
+                showMessage('otpVerificationMessage', 'An error occurred. Please try again.', true);
+            }
+        });
+
+        // Resend OTP button click handler
+        document.getElementById('resendOtpBtn').addEventListener('click', async () => {
+            const email = document.getElementById('adminEmail').value.trim();
+            
+            try {
+                showLoader('Resending OTP...');
+                const response = await fetch(`${API_BASE_URL}/send-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+
+                const data = await response.json();
+                hideLoader();
+
+                if (response.ok) {
+                    showMessage('otpVerificationMessage', 'OTP resent successfully! Check your email.', false);
+                    document.getElementById('otpCode').value = '';
+                } else {
+                    showMessage('otpVerificationMessage', data.message, true);
+                }
+            } catch (error) {
+                hideLoader();
+                showMessage('otpVerificationMessage', 'An error occurred. Please try again.', true);
+            }
+        });
+
+        // Form submission handler
+        document.getElementById('adminSignupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!verifiedEmail) {
+                showMessage('registrationMessage', 'Please verify your email first', true);
+                return;
+            }
+
+            const username = document.getElementById('adminUsername').value;
+            const organizationType = document.getElementById('organizationType').value;
+            const role = document.getElementById('adminRole').value;
+            const mobileNo = document.getElementById('adminMobileNo').value;
+            const password = document.getElementById('adminPassword').value;
+            const confirmPassword = document.getElementById('adminConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showMessage('registrationMessage', 'Passwords do not match', true);
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('registrationMessage', 'Password must be at least 6 characters long', true);
+                return;
+            }
+
+            try {
+                showLoader('Creating admin account...');
+                const response = await fetch(`${API_BASE_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        role,
+                        username,
+                        email: verifiedEmail,
+                        organizationType,
+                        mobileNo,
+                        password
+                    }),
+                });
+
+                const data = await response.json();
+                hideLoader();
+
+                if (response.ok) {
+                    showMessage('registrationMessage', 'Admin registration successful! Your account will be verified before activation. Please check your email for confirmation.', false);
+                    setTimeout(() => {
+                        window.location.href = 'admin-login.html';
+                    }, 3000);
+                } else {
+                    showMessage('registrationMessage', data.message, true);
+                }
+            } catch (error) {
+                hideLoader();
+                showMessage('registrationMessage', 'An error occurred. Please try again.', true);
+            }
+        });
+    </script>
+
+    <!-- global loading overlay -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Loading...</div>
+    </div>
+</body>
+</html>
